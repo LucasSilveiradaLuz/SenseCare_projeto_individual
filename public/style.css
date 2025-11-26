@@ -28,3 +28,74 @@
 .shortcut-item.active {
     background:  #10bfa5;
 }
+.card-title {
+    font-size: 1.3rem;
+    color: #888;
+}
+.home-resumo-titulo {
+    font-size: 1.3rem;
+    color: #222;
+    margin-bottom: 10px;
+}
+/* --- Cores e Variáveis (Adicione/Mantenha no topo do seu style.css) --- */
+:root {
+    --sensecare-green: #00B894;
+    --sensecare-light-gray: #f8f9fa; /* Fundo do resumo */
+}
+
+/* --- Estilos Customizados para o Card de Início (Novos estilos) --- */
+
+/* Card Principal: Define o tamanho, sombra e borda arredondada */
+.card-custom-shadow {
+    max-width: 450px; 
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+/* Avatar Placeholder: Cria o círculo cinza claro */
+.avatar-placeholder {
+    width: 50px;
+    height: 50px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+}
+
+/* Título de Saudação */
+.custom-title {
+    color: #343a40;
+}
+
+/* Card de Resumo: Define o fundo leve e borda arredondada */
+.resumo-card {
+    background-color: var(--sensecare-light-gray);
+    border: none;
+    border-radius: 0.75rem;
+}
+
+/* Ícones: Define a cor primária verde */
+.icon-primary {
+    color: var(--sensecare-green);
+    font-size: 1.2rem;
+}
+
+/* Botões do Resumo: Define a cor de fundo e o estilo compacto */
+.btn-resumo-primary {
+    background-color: var(--sensecare-green);
+    color: white;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+}
+
+.btn-resumo-primary:hover {
+    background-color: #00a082; 
+    color: white;
+}
+
+/*
+    Mantenha aqui todos os seus outros estilos (para navbar, .shortcut-item, etc.)
+*/

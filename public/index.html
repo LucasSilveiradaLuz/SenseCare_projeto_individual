@@ -5,135 +5,176 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SenseCare</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <nav class="navbar-shortcuts d-flex gap-3 p-3">
-  <a href="#" class="shortcut-item active" data-target="inicio-section">Início</a>
-  <a href="#" class="shortcut-item" data-target="pacientes-section">Pacientes</a>
-  <a href="#" class="shortcut-item" data-target="cadastro-section">Cadastro</a>
-  <a href="#" class="shortcut-item" data-target="agenda-section">Agenda</a>
-  <a href="#" class="shortcut-item" data-target="login-section">Login</a>
+    <a href="#" class="shortcut-item active" data-target="inicio-section">Início</a>
+    <a href="#" class="shortcut-item" data-target="pacientes-section">Pacientes</a>
+    <a href="#" class="shortcut-item" data-target="cadastro-section">Cadastro</a>
+    <a href="#" class="shortcut-item" data-target="agenda-section">Agenda</a>
+    <a href="#" class="shortcut-item" data-target="login-section">Login</a>
 </nav>
 
-<!-- Seções -->
-<div id="inicio-section">
-  <h1>Início</h1>
-  <p>Bem-vindo ao SenseCare!</p>
+<div id="inicio-section" class="text-center mt-4"> 
+
+    <img src="img/SenseCare.jpeg" id="logo" alt="Logo SenseCare" width="80" height="80" class="mb-4 d-block mx-auto">
+
+    <div class="card card-custom-shadow mb-4 d-block mx-auto"> 
+        <div class="card-body p-4">
+            
+            <div class="d-flex align-items-center mb-4">
+                <div class="avatar-placeholder me-3"></div> 
+                <div class="text-start"> <p class="mb-0 text-muted small">Boas vindas</p>
+                    <h5 class="fw-bold mb-1 custom-title">Olá, Enfermeiro(a)!</h5>
+                    <p class="mb-0 text-muted small">Telefone: +55 51 98934-5298</p>
+                </div>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="card resumo-card p-3">
+                <h6 class="fw-bold resumo-titulo mb-3 text-start">Resumo</h6>
+                
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person-heart me-2 icon-primary"></i> 
+                        Você tem <strong id="pacientes-count" class="mx-1">0</strong> pacientes
+                    </div>
+                    <button id="btnVerPacientes" class="btn btn-sm btn-resumo-primary">Ver Pacientes</button>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-bell-fill me-2 icon-primary"></i>
+                        <strong class="me-2">alertas pendentes</strong>
+                    </div>
+                    <button id="btnVerAlertas" class="btn btn-sm btn-resumo-primary">Ver Alertas</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 <div id="pacientes-section" style="display: none;">
-  <h1>Pacientes</h1>
+    <h1>Pacientes</h1>
 </div>
 
 <div id="cadastro-section" style="display: none;">
-  <h1>Cadastro</h1>
+    <h1>Cadastro</h1>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-nome">Nome</span>
-    <input type="text" class="form-control" placeholder="Digite seu nome" aria-label="Nome" aria-describedby="basic-nome">
-  </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-nome">Nome</span>
+        <input type="text" class="form-control" placeholder="Digite seu nome" aria-label="Nome" aria-describedby="basic-nome">
+    </div>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-sobrenome">Sobrenome</span>
-    <input type="text" class="form-control" placeholder="Digite seu sobrenome" aria-label="Sobrenome" aria-describedby="basic-sobrenome">
-  </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-sobrenome">Sobrenome</span>
+        <input type="text" class="form-control" placeholder="Digite seu sobrenome" aria-label="Sobrenome" aria-describedby="basic-sobrenome">
+    </div>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-dtnasc">Data de nascimento</span>
-    <input type="date" class="form-control" aria-label="Data de nascimento" aria-describedby="basic-dtnasc">
-  </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-dtnasc">Data de nascimento</span>
+        <input type="date" class="form-control" aria-label="Data de nascimento" aria-describedby="basic-dtnasc">
+    </div>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-cpf">CPF</span>
-    <input type="text" class="form-control" placeholder="000.000.000-00" aria-label="CPF" aria-describedby="basic-cpf">
-  </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-cpf">CPF</span>
+        <input type="text" class="form-control" placeholder="000.000.000-00" aria-label="CPF" aria-describedby="basic-cpf">
+    </div>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-endereco">Endereço</span>
-    <input type="text" class="form-control" placeholder="Digite seu endereço" aria-label="Endereço" aria-describedby="basic-endereco">
-  </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-endereco">Endereço</span>
+        <input type="text" class="form-control" placeholder="Digite seu endereço" aria-label="Endereço" aria-describedby="basic-endereco">
+    </div>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-telefone">Telefone</span>
-    <input type="tel" class="form-control" placeholder="(00) 00000-0000" aria-label="Telefone" aria-describedby="basic-telefone">
-  </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-telefone">Telefone</span>
+        <input type="tel" class="form-control" placeholder="(00) 00000-0000" aria-label="Telefone" aria-describedby="basic-telefone">
+    </div>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-mae">Nome da mãe</span>
-    <input type="text" class="form-control" placeholder="Digite o nome da mãe" aria-label="Nome da mãe" aria-describedby="basic-mae">
-  </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-mae">Nome da mãe</span>
+        <input type="text" class="form-control" placeholder="Digite o nome da mãe" aria-label="Nome da mãe" aria-describedby="basic-mae">
+    </div>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-procedimento">Procedimento</span>
-    <input type="text" class="form-control" placeholder="Digite o procedimento" aria-label="Procedimento" aria-describedby="basic-procedimento">
-  </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-procedimento">Procedimento</span>
+        <input type="text" class="form-control" placeholder="Digite o procedimento" aria-label="Procedimento" aria-describedby="basic-procedimento">
+    </div>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-enfermeiro">Enfermeiro responsável</span>
-    <input type="text" class="form-control" placeholder="Digite o nome do enfermeiro" aria-label="Enfermeiro" aria-describedby="basic-enfermeiro">
-  </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-enfermeiro">Enfermeiro responsável</span>
+        <input type="text" class="form-control" placeholder="Digite o nome do enfermeiro" aria-label="Enfermeiro" aria-describedby="basic-enfermeiro">
+    </div>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-historico">Histórico de doenças</span>
-    <textarea class="form-control" aria-label="Histórico de doenças" aria-describedby="basic-historico"></textarea>
-  </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-historico">Histórico de doenças</span>
+        <textarea class="form-control" aria-label="Histórico de doenças" aria-describedby="basic-historico"></textarea>
+    </div>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-medicacoes">Medicações</span>
-    <textarea class="form-control" aria-label="Medicações" aria-describedby="basic-medicacoes"></textarea>
-  </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-medicacoes">Medicações</span>
+        <textarea class="form-control" aria-label="Medicações" aria-describedby="basic-medicacoes"></textarea>
+    </div>
 
-  <div class="input-group mb-3">
-    <label class="input-group-text" for="select-genero">Gênero</label>
-    <select class="form-select" id="select-genero" aria-label="Gênero">
-      <option selected>Escolha...</option>
-      <option value="feminino">Feminino</option>
-      <option value="masculino">Masculino</option>
-      <option value="outro">Outro</option>
-    </select>
-  </div>
+    <div class="input-group mb-3">
+        <label class="input-group-text" for="select-genero">Gênero</label>
+        <select class="form-select" id="select-genero" aria-label="Gênero">
+            <option selected>Escolha...</option>
+            <option value="feminino">Feminino</option>
+            <option value="masculino">Masculino</option>
+            <option value="outro">Outro</option>
+        </select>
+    </div>
 
-  <div class="input-group mb-3">
-    <label class="input-group-text" for="select-alergias">Alergias</label>
-    <select class="form-select" id="select-alergias" aria-label="Alergias">
-      <option selected>Escolha...</option>
-      <option value="nao">Não</option>
-      <option value="nao_sei">Não sei</option>
-      <option value="sim">Sim</option>
-    </select>
-  </div>
+    <div class="input-group mb-3">
+        <label class="input-group-text" for="select-alergias">Alergias</label>
+        <select class="form-select" id="select-alergias" aria-label="Alergias">
+            <option selected>Escolha...</option>
+            <option value="nao">Não</option>
+            <option value="nao_sei">Não sei</option>
+            <option value="sim">Sim</option>
+        </select>
+    </div>
 
-  <div class="input-group mb-3">
-    <label class="input-group-text" for="select-prioridade">Prioridade</label>
-    <select class="form-select" id="select-prioridade" aria-label="Prioridade">
-      <option selected>Escolha...</option>
-      <option value="neuroatipico">Neuroátipico</option>
-      <option value="gestante">Gestante</option>
-      <option value="nenhuma">Nenhuma</option>
-    </select>
-  </div>
+    <div class="input-group mb-3">
+        <label class="input-group-text" for="select-prioridade">Prioridade</label>
+        <select class="form-select" id="select-prioridade" aria-label="Prioridade">
+            <option selected>Escolha...</option>
+            <option value="neuroatipico">Neuroátipico</option>
+            <option value="gestante">Gestante</option>
+            <option value="nenhuma">Nenhuma</option>
+        </select>
+    </div>
 
-  <button type="submit" class="btn btn-primary">Enviar</button>
+    <button type="submit" class="btn btn-primary">Enviar</button>
 </div>
 
 <div id="agenda-section" style="display: none;">
-  <h1>Agenda</h1>
+    <h1>Agenda</h1>
 </div>
 
 <div id="login-section" style="display: none;">
-  <h1>Login</h1>
+    <h1>Login</h1>
 
-  <label for="CIP">CIP</label>
-  <input id="CIP" type="number">
+    <label for="CIP">CIP</label>
+    <input id="CIP" type="number">
 
-  <label for="senha">Senha</label>
-  <input id="senha" type="password">
+    <label for="senha">Senha</label>
+    <input id="senha" type="password">
 
-  <button id="botao" onclick="enviaFormulario()">Cadastrar</button>
+    <button id="botao" onclick="enviaFormulario()">Cadastrar</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>
