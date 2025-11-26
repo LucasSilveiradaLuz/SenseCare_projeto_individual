@@ -1,3 +1,20 @@
+/* Remova as propriedades de fundo do seletor body principal, deixando-o limpo */
+body {
+    /* (Mantenha aqui apenas propriedades globais, como fontes, margens, etc.) */
+    margin: 0; 
+    padding: 0;
+    /* Outros estilos globais... */
+}
+
+/* CRIE ESTA NOVA CLASSE */
+.fundo-inicial {
+    /* Estilos para a imagem de fundo (seu código original + ajustes) */
+    background-image: url('img/enfermagemFundo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
 /* Fundo da navbar */
 .navbar-shortcuts {
     background: #f5f7fb !important; /* igual ao da imagem */
@@ -52,6 +69,7 @@
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border: none;
+
 }
 
 /* Avatar Placeholder: Cria o círculo cinza claro */

@@ -21,12 +21,12 @@ const db = mysql.createConnection({
 // ---------- ROTAS ----------
 
 // GET /usuarios → retorna todos os usuários do banco
-app.get("/enfermeiros", (req, res) => {
-  db.query("SELECT * FROM enfermeiro", (err, results) => {
-    if (err) throw err; // Se der erro na query, interrompe
-    res.json(results); // Envia o resultado como JSON para o front
-  });
-});
+// app.get("/enfermeiros", (req, res) => {
+//   db.query("SELECT * FROM enfermeiro", (err, results) => {
+//     if (err) throw err; // Se der erro na query, interrompe
+//     res.json(results); // Envia o resultado como JSON para o front
+//   });
+// });
 app.get("/Pacientes", (req, res) => {
   db.query("SELECT * FROM Pacientes", (err, results) => {
     if (err) throw err; // Se der erro na query, interrompe
@@ -34,14 +34,44 @@ app.get("/Pacientes", (req, res) => {
   });
 });
 // POST /usuarios → insere um novo usuário no banco
-app.post("/enfermeiros", (req, res) => {
-  const { CIP, CPF, Nome, turno, telefone, email} = req.body; // Extrai os dados enviados pelo front
+app.post("/Pacientes", (req, res) => {
+  const { 
+    CPF, 
+    Nome, 
+    DataDeNascimento, 
+    Endereço, 
+    Telefone, 
+    mãe, 
+    Procedimento, 
+    Historico, 
+    Medicacoes, 
+    Genero, 
+    Alergias, 
+    Prioridade
+  } = req.body; 
+
   db.query(
-    "INSERT INTO enfermeiro ( CIP, CPF, Nome, turno, telefone, email) VALUES (?, ?, ?, ?, ?, ?)", // Query SQL com placeholders
-    [ CIP, CPF, Nome, turno, telefone, email], // Valores que substituem os "?"
+    "INSERT INTO Pacientes ( CPF_Paciente, Nome, dataNascimento, endereco, telefone, nomeMae, procedimento, HistoricoDoencas, Medicacoes, Genero, Alergias, Prioridade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    [ 
+      CPF, 
+      Nome, 
+      DataDeNascimento, 
+      Endereço, 
+      Telefone, 
+      mãe, 
+      Procedimento, 
+      Historico, 
+      Medicacoes, 
+      Genero, 
+      Alergias, 
+      Prioridade
+    ],
     (err, result) => {
-      if (err) throw err;
-      res.json({ message: "Funcionário adicionado com sucesso!" }); // Retorno de sucesso
+      if (err) {
+        console.error("Erro ao adicionar paciente:", err);
+        return res.status(500).json({ message: "Erro ao adicionar paciente." });
+      }
+      res.json({ message: "Paciente adicionado com sucesso!" }); 
     }
   );
 });

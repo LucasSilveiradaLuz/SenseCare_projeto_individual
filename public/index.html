@@ -10,7 +10,8 @@
     
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="fundo-inicial"> 
+    
 
 <nav class="navbar-shortcuts d-flex gap-3 p-3">
     <a href="#" class="shortcut-item active" data-target="inicio-section">Início</a>
@@ -159,6 +160,52 @@
 
 <div id="agenda-section" style="display: none;">
     <h1>Agenda</h1>
+     <!-- Modal para novo cuidado -->
+                  <div id="modal-novo-cuidado" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+                      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; max-width: 400px; width: 90%; max-height: 80%; overflow-y: auto;">
+                          <h2>Novo cuidado para o paciente</h2>
+                          <p id="nome-paciente-cuidado"></p>
+                          <div id="opcoes-cuidado">
+                              <h3>Selecione os tipos de cuidado:</h3>
+                              <label><input type="checkbox" id="medicacao" name="cuidado"> Medicação</label><br>
+                              <label><input type="checkbox" id="banho-leito" name="cuidado"> Banho de leito</label><br>
+                              <label><input type="checkbox" id="hidratacao" name="cuidado"> Hidratação</label><br>
+                              <label><input type="checkbox" id="mudanca-decubito" name="cuidado"> Mudança de decúbito</label><br>
+                          </div>
+
+                          <div class="input-caixa">
+                              <label for="observacoes-cuidado" class="form_label">Observações</label>
+                              <textarea id="observacoes-cuidado" class="form-control" rows="3" placeholder="Digite observações sobre o cuidado..."></textarea>
+                          </div>
+
+                          <div class="input-caixa">
+                              <label for="data-cuidado" class="form_label">Data do cuidado</label>
+                              <div class="input-campo">
+                                  <input type="date" id="data-cuidado" class="form-control">
+                              </div>
+                          </div>
+
+                          <div class="input-caixa">
+                              <label for="hora-cuidado" class="form_label">Horário</label>
+                              <div class="input-campo">
+                                  <input type="time" id="hora-cuidado" class="form-control">
+                              </div>
+                          </div>
+                          <button type="button" id="btnSalvarCuidado" class="btn-padrao">Salvar</button>
+                          <button type="button" id="btnFecharCuidadoModal" class="btn-padrao">Fechar</button>
+                      </div>
+                  </div>
+
+                  <!-- Modal para histórico de cuidados -->
+                  <div id="modal-historico-cuidado" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+                      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; max-width: 800px; width: 90%; max-height: 80%; overflow-y: auto;">
+                          <h2>Histórico de Cuidados</h2>
+                          <p id="nome-paciente-historico"></p>
+                          <div id="historico-cuidados-lista"></div>
+                          <button type="button" id="btnFecharHistoricoModal" class="btn-padrao">Fechar</button>
+                      </div>
+                  </div>
+
 </div>
 
 <div id="login-section" style="display: none;">

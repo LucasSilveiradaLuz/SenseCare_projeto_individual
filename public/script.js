@@ -1,3 +1,4 @@
+
 let CIP = document.getElementById("CIP")
 let senha = document.getElementById("senha")
 function enviaFormulario() {
@@ -33,29 +34,40 @@ if(acessoPermitido == true && i === 0){
   });
 }
 }
+// ... [O seu código que antecede este bloco] ...
+
 const links = document.querySelectorAll('.shortcut-item');
 const secoes = document.querySelectorAll('div[id$="-section"]');
 
 links.forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault(); 
+    link.addEventListener('click', (e) => {
+        e.preventDefault(); 
 
-    const alvo = link.getAttribute('data-target');
+        const alvo = link.getAttribute('data-target');
 
-    // Esconde  as seções
-    secoes.forEach(section => {
-      section.style.display = 'none';
+        // 1. Esconde as seções
+        secoes.forEach(section => {
+            section.style.display = 'none';
+        });
+
+        // 2. MOSTRA A SEÇÃO E CONTROLA O FUNDO DO BODY
+        const SecaoAlvo = document.getElementById(alvo);
+        if (SecaoAlvo) {
+            SecaoAlvo.style.display = 'block'; 
+
+            // VERIFICAÇÃO CHAVE para o fundo:
+            if (alvo === 'inicio-section') {
+                // Adiciona a imagem de fundo SOMENTE na página inicial
+                document.body.classList.add('fundo-inicial');
+            } else {
+                // Remove a imagem de fundo nas outras páginas
+                document.body.classList.remove('fundo-inicial');
+            }
+        }
+
+        // 3. Atualiza a barra de navegação
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
     });
-
-    // Mostra uma seção só 
-    const SecaoAlvo = document.getElementById(alvo);
-    if (SecaoAlvo) {
-      SecaoAlvo.style.display = 'block';
-    }
-
-    // Atualiza a barra de navegação
-    links.forEach(l => l.classList.remove('active'));
-    link.classList.add('active');
-  });
 });
 
