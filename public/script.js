@@ -1,5 +1,38 @@
+ let campos = document.querySelectorAll("form-control")
+ let select = document.querySelectorAll("select")
+  let url = 'http://localhost:3000/Pacientes';
+ 
 
-let CIP = document.getElementById("CIP")
+async function carregaDados() {
+  // Fazendo uma requisição GET para buscar os funcionários
+  await fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      lista.innerHTML = ""; // Limpar a lista antes de adicionar os dados
+      data.forEach((Paciente) => {
+        // Criar um <li> para cada funcionário
+        const li = document.createElement("li");
+     
+        // Adicionar o nome e email do funcionário dentro do <li>
+        li.innerHTML = `
+          <strong>Nome:</strong> <span>${Paciente.Nome}</span><br>
+          <strong>CPF_Paciente:</strong> <span>${Paciente.CPF_Paciente}</span><br>
+          <strong>Telefone:</strong> <span>${Paciente.telefone}</span><br>
+          <strong>Email:</strong> <span>${Paciente.email}</span>
+          <strong>nomeMae:</strong> <span>${Paciente.nomeMae}</span>
+          <strong>procedimento:</strong> <span>${Paciente.procedimento}</span>
+          <strong>HistoricoDoencas:</strong> <span>${Paciente.HistoricoDoencas}</span>
+          <strong>Medicacoes:</strong> <span>${Paciente.Medicacoes}</span>
+                <strong>Genero:</strong> <span>${Paciente.Genero}</span>
+                      <strong>Alergias:</strong> <span>${Paciente.Alergias}</span>
+                            <strong>Prioridade:</strong> <span>${Paciente.Prioridade}</span>
+                                  <strong>Leito:</strong> <span>${Paciente.Leito}</span>
+
+        `;
+      })
+    })
+  }
+  let CIP = document.getElementById("CIP")
 let senha = document.getElementById("senha")
 function enviaFormulario() {
   CIP.value;
