@@ -64,7 +64,8 @@ body {
 
 /* Card Principal: Define o tamanho, sombra e borda arredondada */
 .card-custom-shadow {
-    max-width: 450px; 
+    max-width: 470px; 
+    height:400px;
     width: 100%;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -90,6 +91,7 @@ body {
     background-color: var(--sensecare-light-gray);
     border: none;
     border-radius: 0.75rem;
+    height:230px;
 }
 
 /* Ícones: Define a cor primária verde */

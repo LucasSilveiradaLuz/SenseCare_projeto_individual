@@ -20,7 +20,6 @@ const db = mysql.createConnection({
 
 // ---------- ROTAS ----------
 
-// GET /usuarios → retorna todos os usuários do banco
 // app.get("/enfermeiros", (req, res) => {
 //   db.query("SELECT * FROM enfermeiro", (err, results) => {
 //     if (err) throw err; // Se der erro na query, interrompe
