@@ -35,35 +35,13 @@ app.get("/Pacientes", (req, res) => {
 // POST /usuarios → insere um novo usuário no banco
 app.post("/Pacientes", (req, res) => {
   const { 
-    CPF, 
-    Nome, 
-    DataDeNascimento, 
-    Endereço, 
-    Telefone, 
-    mãe, 
-    Procedimento, 
-    Historico, 
-    Medicacoes, 
-    Genero, 
-    Alergias, 
-    Prioridade
+CPF_Paciente, Nome, dataNascimento, endereco, telefone, nomeMae, procedimento, HistoricoDoencas, Medicacoes, Genero, Alergias, Prioridade
   } = req.body; 
 
   db.query(
     "INSERT INTO Pacientes ( CPF_Paciente, Nome, dataNascimento, endereco, telefone, nomeMae, procedimento, HistoricoDoencas, Medicacoes, Genero, Alergias, Prioridade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [ 
-      CPF, 
-      Nome, 
-      DataDeNascimento, 
-      Endereço, 
-      Telefone, 
-      mãe, 
-      Procedimento, 
-      Historico, 
-      Medicacoes, 
-      Genero, 
-      Alergias, 
-      Prioridade
+      CPF_Paciente, Nome, dataNascimento, endereco, telefone, nomeMae, procedimento, HistoricoDoencas, Medicacoes, Genero, Alergias, Prioridade
     ],
     (err, result) => {
       if (err) {

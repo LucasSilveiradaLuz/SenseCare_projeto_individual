@@ -79,64 +79,54 @@
 <div id="cadastro-section" style="display: none;">
     <h1>Cadastro</h1>
 
+       <div class="input-group mb-3">
+        <span class="input-group-text">CPF</span>
+        <input type="text" id = "CPF_Paciente" class="form-control" name="CPF_Paciente">
+    </div>
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-nome">Nome</span>
-        <input type="text" class="form-control" placeholder="Digite seu nome" aria-label="Nome" aria-describedby="basic-nome">
+        <span class="input-group-text">Nome</span>
+        <input type="text" id = "Nome" class="form-control" name="Nome">
     </div>
 
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-sobrenome">Sobrenome</span>
-        <input type="text" class="form-control" placeholder="Digite seu sobrenome" aria-label="Sobrenome" aria-describedby="basic-sobrenome">
+        <span class="input-group-text">Data de nascimento</span>
+        <input type="date" id = "dataNascimento" class="form-control" name="dataNascimento">
+    </div>
+
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">Endereço</span>
+        <input type="text" id = "endereco" class="form-control" name="endereco">
     </div>
 
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-dtnasc">Data de nascimento</span>
-        <input type="date" class="form-control" aria-label="Data de nascimento" aria-describedby="basic-dtnasc">
+        <span class="input-group-text">Telefone</span>
+        <input type="tel" id = "telefone" class="form-control" name="telefone">
     </div>
 
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-cpf">CPF</span>
-        <input type="text" class="form-control" placeholder="000.000.000-00" aria-label="CPF" aria-describedby="basic-cpf">
+        <span class="input-group-text">Nome da mãe</span>
+        <input type="text" id = "nomeMae" class="form-control" name="nomeMae">
     </div>
 
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-endereco">Endereço</span>
-        <input type="text" class="form-control" placeholder="Digite seu endereço" aria-label="Endereço" aria-describedby="basic-endereco">
+        <span class="input-group-text">Procedimento</span>
+        <input type="text" id = "procedimento" class="form-control" name="procedimento">
     </div>
 
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-telefone">Telefone</span>
-        <input type="tel" class="form-control" placeholder="(00) 00000-0000" aria-label="Telefone" aria-describedby="basic-telefone">
+        <span class="input-group-text">Histórico de doenças</span>
+        <textarea class="form-control" id = "HistoricoDoencas" name="HistoricoDoencas"></textarea>
     </div>
 
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-mae">Nome da mãe</span>
-        <input type="text" class="form-control" placeholder="Digite o nome da mãe" aria-label="Nome da mãe" aria-describedby="basic-mae">
+        <span class="input-group-text">Medicações </span>
+        <textarea class="form-control" id = "Medicacoes" name="Medicacoes"></textarea>
     </div>
 
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-procedimento">Procedimento</span>
-        <input type="text" class="form-control" placeholder="Digite o procedimento" aria-label="Procedimento" aria-describedby="basic-procedimento">
-    </div>
-
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-enfermeiro">Enfermeiro responsável</span>
-        <input type="text" class="form-control" placeholder="Digite o nome do enfermeiro" aria-label="Enfermeiro" aria-describedby="basic-enfermeiro">
-    </div>
-
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-historico">Histórico de doenças</span>
-        <textarea class="form-control" aria-label="Histórico de doenças" aria-describedby="basic-historico"></textarea>
-    </div>
-
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-medicacoes">Medicações</span>
-        <textarea class="form-control" aria-label="Medicações" aria-describedby="basic-medicacoes"></textarea>
-    </div>
-
-    <div class="input-group mb-3">
-        <label class="input-group-text" for="select-genero">Gênero</label>
-        <select class="form-select" id="select-genero" aria-label="Gênero">
+        <label class="input-group-text">Gênero</label>
+        <select class="form-select" name="Genero">
             <option selected>Escolha...</option>
             <option value="feminino">Feminino</option>
             <option value="masculino">Masculino</option>
@@ -145,8 +135,8 @@
     </div>
 
     <div class="input-group mb-3">
-        <label class="input-group-text" for="select-alergias">Alergias</label>
-        <select class="form-select" id="select-alergias" aria-label="Alergias">
+        <label class="input-group-text">Alergias</label>
+        <select class="form-select" name="Alergias">
             <option selected>Escolha...</option>
             <option value="nao">Não</option>
             <option value="nao_sei">Não sei</option>
@@ -155,17 +145,18 @@
     </div>
 
     <div class="input-group mb-3">
-        <label class="input-group-text" for="select-prioridade">Prioridade</label>
-        <select class="form-select" id="select-prioridade" aria-label="Prioridade">
+        <label class="input-group-text">Prioridade</label>
+        <select class="form-select" name="Prioridade">
             <option selected>Escolha...</option>
-            <option value="neuroatipico">Neuroátipico</option>
-            <option value="gestante">Gestante</option>
-            <option value="nenhuma">Nenhuma</option>
+            <option value="Neurodivergência">Neuroátipico</option>
+            <option value="Gestante">Gestante</option>
+            <option value="Nenhuma">Nenhuma</option>
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Enviar</button>
+    <button onclick = "carregaPaciente()" id="btnEnviar" class="btn btn-primary">Enviar</button>
 </div>
+
 
 <div id="agenda-section" style="display: none;">
     <h1>Agenda</h1>
