@@ -52,11 +52,11 @@ CPF_Paciente, Nome, dataNascimento, endereco, telefone, nomeMae, procedimento, H
     }
   );
 });
-app.delete("/funcionarios/:id", (req, res) => {
+app.delete("/Pacientes/:id", (req, res) => {
   const { id } = req.params;
-  db.query("DELETE FROM funcionarios WHERE id = ?", [id], (err, result) => {
+  db.query("DELETE FROM Pacientes WHERE id = ?", [id], (err, result) => {
     if (err) throw err;
-    res.json({ message: "Funcionário removido com sucesso!" });
+    res.json({ message: "Paciente removido com sucesso!" });
   });
 });
 // Inicia o servidor na porta 3000

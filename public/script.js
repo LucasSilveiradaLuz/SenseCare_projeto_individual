@@ -1,47 +1,53 @@
 
-const CIP = document.getElementById("CIP");
-const senha = document.getElementById("senha");
+// const CIP = document.getElementById("CIP");
+// const senha = document.getElementById("senha");
 
-function enviaFormulario() {
+// function enviaFormulario() {
 
-  const CIPsValidos = ["1234"];
-  const senhasValidas = ["000"];
+//   const CIPsValidos = ["1234"];
+//   const senhasValidas = ["000"];
 
-  const acessoPermitido =
-    CIPsValidos.includes(CIP.value) &&
-    senhasValidas[CIPsValidos.indexOf(CIP.value)] === senha.value;
+//   const acessoPermitido =
+//     CIPsValidos.includes(CIP.value) &&
+//     senhasValidas[CIPsValidos.indexOf(CIP.value)] === senha.value;
 
-  if (acessoPermitido) {
-    alert("Bem-vindo de volta, enfermeiro!");
+//   if (acessoPermitido) {
+//     alert("Bem-vindo de volta, enfermeiro!");
 
-    window.location.href = "http://127.0.0.1:5500/public/index.html";
-  }
-}
+//     window.location.href = "http://127.0.0.1:5500/public/index.html";
+//   }
+// }
 
 
 const links = document.querySelectorAll('.shortcut-item');
 const secoes = document.querySelectorAll('div[id$="-section"]');
 
+
 links.forEach(link => {
   link.addEventListener('click', e => {
 
-    e.preventDefault();
+    e.preventDefault(); // Evita que o link atualize a página
 
-    const alvo = link.getAttribute('data-target');
+    const alvo = link.getAttribute('data-target'); // Define 'alvo' aqui!
 
-   
-    secoes.forEach(section => {
+
+    secoes.forEach(section => { // Oculta todas as seções
       section.style.display = 'none';
     });
 
 
     const secaoAlvo = document.getElementById(alvo);
     if (secaoAlvo) {
-      secaoAlvo.style.display = 'block';
+      secaoAlvo.style.display = 'block'; // Mostra a seção desejada
+
+     
+      if (alvo === 'pacientes-section') {
+        carregaPaciente();
+      }
     }
 
-    
-    if (alvo === "inicio-section") {
+
+    if (alvo === "inicio-section") { // Lógica para o fundo
       document.body.classList.add("fundo-inicial");
     } else {
       document.body.classList.remove("fundo-inicial");
@@ -52,7 +58,6 @@ links.forEach(link => {
     link.classList.add("active");
   });
 });
-
 
 
 const url = "http://localhost:3000/Pacientes";
@@ -93,10 +98,10 @@ async function cadastrarPaciente() {
   }
   console.log(dados)
 }
- 
+
 async function carregaPaciente() {
+
   try {
-   
     const response = await fetch(url);
     const data = await response.json();
 
@@ -119,8 +124,12 @@ async function carregaPaciente() {
       `;
       lista.appendChild(li);
     });
+    
 
   } catch (erro) {
     console.error("Erro ao carregar pacientes:", erro);
   }
 }
+
+
+

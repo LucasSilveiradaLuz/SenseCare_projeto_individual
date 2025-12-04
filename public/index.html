@@ -14,22 +14,21 @@
     
 
 <nav class="navbar-shortcuts d-flex gap-3 p-3">
-      
-<img src="img/SenseCare_logo.png"  class="img-fluid" id="logo" alt="Logo SenseCare" width="50" height="50" >
+
+    <img src="img/SenseCare_logo.png" class="img-fluid" id="logo" alt="Logo SenseCare" width="50" height="50">
+
     <a href="#" class="shortcut-item active" data-target="inicio-section">Início</a>
     <a href="#" class="shortcut-item" data-target="pacientes-section">Pacientes</a>
     <a href="#" class="shortcut-item" data-target="cadastro-section">Cadastro</a>
     <a href="#" class="shortcut-item" data-target="agenda-section">Agenda</a>
-   <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
 
-
-
-  </div>
+    <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+    </form>
 
 </nav>
+
 
 <div id="inicio-section" class="text-center mt-4"> 
 
@@ -74,6 +73,8 @@
 
 <div id="pacientes-section" style="display: none;">
     <h1>Pacientes</h1>
+    <ul id="lista">
+        </ul>
 </div>
 
 <div id="cadastro-section" style="display: none;">
@@ -158,7 +159,8 @@
 </div>
 
 
-<div id="agenda-section" style="display: none;">
+<div id="agenda-section" style="display: none;">  
+
     <h1>Agenda</h1>
      <!-- Modal para novo cuidado -->
                   <div id="modal-novo-cuidado" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
@@ -205,9 +207,8 @@
                           <button type="button" id="btnFecharHistoricoModal" class="btn-padrao">Fechar</button>
                       </div>
                   </div>
-
 </div>
-
+</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
