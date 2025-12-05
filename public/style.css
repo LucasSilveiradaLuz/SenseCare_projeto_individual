@@ -47,7 +47,7 @@ body {
 }
 .card-title {
     font-size: 1.3rem;
-    color: #888;
+    color: black;
 }
 .home-resumo-titulo {
     font-size: 1.3rem;
@@ -119,3 +119,33 @@ body {
 /*
     Mantenha aqui todos os seus outros estilos (para navbar, .shortcut-item, etc.)
 */
+.modal-simples {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-conteudo {
+  background-color: white;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 8px;
+  color: black;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.btn-fechar {
+  position: absolute;
+  top: 10px; right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+}
