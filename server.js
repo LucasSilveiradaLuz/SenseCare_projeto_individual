@@ -18,7 +18,7 @@ const db = mysql.createConnection({
   database: "SenseCare", // Nome do banco que você criou
 });
 
-// ---------- ROTAS ----------
+
 
 // app.get("/enfermeiros", (req, res) => {
 //   db.query("SELECT * FROM enfermeiro", (err, results) => {
@@ -52,13 +52,19 @@ CPF_Paciente, Nome, dataNascimento, endereco, telefone, nomeMae, procedimento, H
     }
   );
 });
-app.delete("/Pacientes/:id", (req, res) => {
-  const { id } = req.params;
-  db.query("DELETE FROM Pacientes WHERE id = ?", [id], (err, result) => {
-    if (err) throw err;
-    res.json({ message: "Paciente removido com sucesso!" });
-  });
+app.delete('/Pacientes/:CPF_Paciente', (req, res) => {
+  const CPF_Paciente = req.params.CPF_Paciente; // pega o parâmetro da URL
+  db.query(
+    "DELETE FROM Pacientes WHERE CPF_Paciente = ?", 
+    [CPF_Paciente], 
+    (err, result) => {
+      if (err) return res.status(500).json({ message: "Erro ao deletar paciente." });
+      res.json({ message: "Paciente removido com sucesso!" });
+    }
+  );
 });
+
+
 // Inicia o servidor na porta 3000
 app.listen(3000, () =>
   console.log("Servidor rodando em http://localhost:3000")

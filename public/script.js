@@ -22,7 +22,6 @@ const secoes = document.querySelectorAll('div[id$="-section"]');
 
 links.forEach(link => {
   link.addEventListener('click', e => {
-
     e.preventDefault(); // Evita que o link atualize a página
 
     const alvo = link.getAttribute('data-target'); // Define 'alvo' aqui!
@@ -51,8 +50,106 @@ links.forEach(link => {
   });
 });
 
+// URL do backend
 const url = "http://localhost:3000/Pacientes";
+let listaPacientes = []; // Array global para armazenar pacientes
 
+// Elementos DOM
+const lista = document.getElementById("lista");
+const searchInput = document.querySelector('.form-control[type="search"]');
+
+// Função para renderizar os pacientes
+function renderizaPacientes(pacientes) {
+  lista.innerHTML = "";
+
+  pacientes.forEach(p => {
+    const li = document.createElement("li");
+    li.className = "list-unstyled mb-3 col-md-4";
+
+    const card = document.createElement("div");
+    card.className = "card shadow-sm h-100";
+    card.style.cursor = "pointer";
+    card.style.backgroundColor = "#30B36B";
+    card.style.color = "white";
+    card.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
+    card.style.width = "500px";
+    card.style.height = "500px";
+
+    const cardBody = document.createElement("div");
+    cardBody.className = "card-body";
+
+    const cardTitle = document.createElement("h5");
+    cardTitle.className = "card-title";
+    cardTitle.textContent = p.Nome;
+
+    const cardText = document.createElement("p");
+    cardText.className = "card-text";
+    cardText.innerHTML = `
+      <strong>CPF:</strong> ${p.CPF_Paciente}<br>
+      <strong>Telefone:</strong> ${p.telefone}<br>
+      <strong>Procedimento:</strong> ${p.procedimento}<br>
+      <strong>Prioridade:</strong> ${p.Prioridade}
+    `;
+
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardText);
+    card.appendChild(cardBody);
+    li.appendChild(card);
+
+    // Modal ao clicar no card
+    card.addEventListener("click", () => abrirModalPaciente(p));
+
+    // Botão excluir
+    const botaoRemover = document.createElement("button");
+    botaoRemover.textContent = "Excluir";
+    botaoRemover.classList.add("btn", "btn-dark", "mt-2");
+
+    botaoRemover.addEventListener("click", async (e) => {
+      e.stopPropagation(); // evita abrir modal
+      if (confirm(`Deseja realmente remover ${p.Nome}?`)) {
+        try {
+          const resposta = await fetch(`${url}/${p.CPF_Paciente}`, { method: "DELETE" });
+          if (resposta.ok) {
+            listaPacientes = listaPacientes.filter(item => item.CPF_Paciente !== p.CPF_Paciente);
+            renderizaPacientes(listaPacientes);
+            console.log("Paciente removido com sucesso!");
+          } else {
+            alert("Erro ao remover paciente!");
+          }
+        } catch (erro) {
+          console.error("Erro ao deletar paciente:", erro);
+          alert("Erro ao remover paciente.");
+        }
+      }
+    });
+
+    li.appendChild(botaoRemover);
+    lista.appendChild(li);
+  });
+}
+
+// Carregar pacientes do servidor
+async function carregaPaciente() {
+  try {
+    const response = await fetch(url);
+    listaPacientes = await response.json();
+    renderizaPacientes(listaPacientes);
+  } catch (erro) {
+    console.error("Erro ao carregar pacientes:", erro);
+  }
+}
+
+// Barra de pesquisa
+searchInput.addEventListener("input", () => {
+  const termo = searchInput.value.toLowerCase().trim();
+  const filtrados = listaPacientes.filter(p => 
+    p.Nome.toLowerCase().includes(termo) || 
+    p.CPF_Paciente.includes(termo)
+  );
+  renderizaPacientes(filtrados);
+});
+
+// Função para cadastrar paciente
 document.getElementById("btnEnviar")
   .addEventListener("click", cadastrarPaciente);
 
@@ -82,93 +179,18 @@ async function cadastrarPaciente() {
     const resultado = await resposta.json();
     alert(resultado.message || "Paciente cadastrado com sucesso!");
     document.getElementById("formCadastro")?.reset();
+
+    // Atualiza lista local sem recarregar página
+    listaPacientes.push(dados);
+    renderizaPacientes(listaPacientes);
   } catch (erro) {
     console.error("Erro ao cadastrar paciente:", erro);
     alert("Ocorreu um erro ao cadastrar o paciente.");
   }
-  console.log(dados)
+  console.log(dados);
 }
 
-async function carregaPaciente() {
-
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    const lista = document.getElementById("lista");
-    
-    lista.innerHTML = "";
-
-    data.forEach(p => {
-      const li = document.createElement("li");
-      li.className = "list-unstyled mb-3 col-md-4";
-
-      const card = document.createElement("div");
-      card.className = "card shadow-sm h-100";
-      card.style.cursor = "pointer";
-      card.style.backgroundColor = "#30B36B"; // verde tom do seu ícone
-      card.style.color = "white";
-      card.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
-
-      const cardBody = document.createElement("div");
-      cardBody.className = "card-body";
-
-      const cardTitle = document.createElement("h5");
-      cardTitle.className = "card-title";
-      cardTitle.textContent = p.Nome;
-
-      card.style.width = "500px";   // define largura fixa
-card.style.height = "500px";  // define altura fixa
-
-      const cardText = document.createElement("p");
-      cardText.className = "card-text";
-      cardText.innerHTML = `
-        <strong>CPF:</strong> ${p.CPF_Paciente}<br>
-        <strong>Telefone:</strong> ${p.telefone}<br>
-        <strong>Procedimento:</strong> ${p.procedimento}<br>
-        <strong>Prioridade:</strong> ${p.Prioridade}
-      `;
-
-
-     ;
-  
-      cardBody.appendChild(cardTitle);
-      cardBody.appendChild(cardText);
-      card.appendChild(cardBody);
-      li.appendChild(card);
-      lista.appendChild(li);
-
-      card.onclick = () => abrirModalPaciente(p);
-
-          const botaoRemover = document.createElement("button");
-    botaoRemover.textContent = "Excluir";
-  
-    botaoRemover.classList.add("btn")
-    botaoRemover.classList.add("btn-dark")
-
-    botaoRemover.addEventListener("click", async () => {
-      if (confirm(`Deseja realmente remover ${Pacientes.nome}?`)) {
-        const resposta = await fetch(`/Pacientes/${Pacientes.id}`, { method: "DELETE" });
-        if (resposta.ok) {
-          carregaPaciente()
-          console.log("ok");
-        } else {
-          alert("Erro ao remover usuário!");
-        }
-      }
-    })
-        lista.appendChild(li);
-        li.appendChild(botaoRemover)
-      
-    });
-
-
-    
-  } catch (erro) {
-    console.error("Erro ao carregar pacientes:", erro);
-  }
-}
-
+// Modal paciente
 function abrirModalPaciente(paciente) {
   const modal = document.getElementById("modalPaciente");
   const modalConteudo = document.getElementById("modalConteudoPaciente");
@@ -189,36 +211,35 @@ function abrirModalPaciente(paciente) {
   `;
 
   modal.style.display = "flex";
-
-  // Corrigido: fecha o modal ao clicar fora
   modal.onclick = function(event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  }
+    if (event.target === modal) modal.style.display = "none";
+  };
 }
 
 document.getElementById("btnFecharModal").addEventListener("click", () => {
   document.getElementById("modalPaciente").style.display = "none";
 });
 
+// Função para registrar cuidado
 function registrarCuidado() {
+  const cuidados = Array.from(
+      document.querySelectorAll('#opcoes-cuidado input[type="checkbox"]:checked')
+  ).map(c => c.id);
 
-    const cuidados = Array.from(
-        document.querySelectorAll('#opcoes-cuidado input[type="checkbox"]:checked')
-    ).map(c => c.id);
+  const registro = {
+      cuidados,
+      observacoes: document.getElementById("observacoes-cuidado").value,
+      data: document.getElementById("data-cuidado").value,
+      hora: document.getElementById("hora-cuidado").value
+  };
 
-    const registro = {
-        cuidados,
-        observacoes: document.getElementById("observacoes-cuidado").value,
-        data: document.getElementById("data-cuidado").value,
-        hora: document.getElementById("hora-cuidado").value
-    };
+  console.log("Cuidado registrado:", registro);
 
-    console.log("Cuidado registrado:", registro);
-
-    alert("Cuidado registrado com sucesso!");
+  alert("Cuidado registrado com sucesso!");
 }
 
 document.getElementById("btnSalvarCuidado")
     .addEventListener("click", registrarCuidado);
+
+// Inicializa a lista de pacientes ao carregar
+carregaPaciente();
