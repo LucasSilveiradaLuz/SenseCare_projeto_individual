@@ -1,151 +1,256 @@
-/* Remova as propriedades de fundo do seletor body principal, deixando-o limpo */
+/* ===============================
+   ESTILOS GLOBAIS
+   =============================== */
+
 body {
-    /* (Mantenha aqui apenas propriedades globais, como fontes, margens, etc.) */
-    margin: 0; 
+    margin: 0;
     padding: 0;
-    /* Outros estilos globais... */
 }
 
-/* CRIE ESTA NOVA CLASSE */
+/* Fundo inicial */
 .fundo-inicial {
-    /* Estilos para a imagem de fundo (seu código original + ajustes) */
     background-image: url('img/enfermagemFundo.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
-/* Fundo da navbar */
+
+/* ===============================
+   NAVBAR
+   =============================== */
+
 .navbar-shortcuts {
-    background: #f5f7fb !important; /* igual ao da imagem */
+    background: #f5f7fb !important;
     width: 100%;
     border-bottom: 1px solid #e3e8ef;
 }
 
-/* Estilo dos botões */
+/* ===============================
+   MENU – BOTÕES COM DESLOCAMENTO REAL
+   =============================== */
+
 .shortcut-item {
     padding: 10px 25px;
-    background: #10bfa5;
-    color: #fff;
+    background-color: #1E88C9;
+    color: whitesmoke;
     font-weight: 600;
     border-radius: 10px;
     text-decoration: none;
     display: inline-block;
-    box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
-    transition: all .2s;
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 0 #166a9e,
+        0 10px 18px rgba(0,0,0,0.25);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
 }
 
 /* Hover */
 .shortcut-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.20);
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 0 #166a9e,
+        0 14px 22px rgba(0,0,0,0.3);
 }
 
-/* Botão ativo em azul */
+/* Ativo */
 .shortcut-item.active {
-    background:  #10bfa5;
+    background-color: #10bfa5;
+
+    transform: translateY(4px);
+    box-shadow:
+        0 2px 0 #0a8c79,
+        0 4px 8px rgba(0,0,0,0.3);
+
+    cursor: default;
 }
-.card-title {
-    font-size: 1.3rem;
-    color: black;
+
+/* Clique */
+.shortcut-item:active {
+    transform: translateY(6px);
+    box-shadow: 0 1px 0 #0a8c79;
 }
-.home-resumo-titulo {
-    font-size: 1.3rem;
-    color: #222;
-    margin-bottom: 10px;
-}
-/* --- Cores e Variáveis (Adicione/Mantenha no topo do seu style.css) --- */
+
+/* ===============================
+   CARD PRINCIPAL – HOME
+   =============================== */
+
 :root {
     --sensecare-green: #00B894;
-    --sensecare-light-gray: #f8f9fa; /* Fundo do resumo */
+    --sensecare-light-gray: #f8f9fa;
 }
 
-/* --- Estilos Customizados para o Card de Início (Novos estilos) --- */
-
-/* Card Principal: Define o tamanho, sombra e borda arredondada */
+/* Card branco principal */
 .card-custom-shadow {
-    max-width: 470px; 
-    height:400px;
+    max-width: 470px;
+    height: 420px;
     width: 100%;
-    border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 1.2rem;
     border: none;
 
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.12);
 }
 
-/* Avatar Placeholder: Cria o círculo cinza claro */
+/* Avatar */
 .avatar-placeholder {
-    width: 50px;
-    height: 50px;
-    background-color: #f0f0f0;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
     border-radius: 50%;
 }
 
-/* Título de Saudação */
+/* Título */
 .custom-title {
     color: #343a40;
 }
 
-/* Card de Resumo: Define o fundo leve e borda arredondada */
+/* ===============================
+   CARD RESUMO – AGORA COM VIDA
+   =============================== */
+
 .resumo-card {
+    position: relative;
     background-color: var(--sensecare-light-gray);
+    border-radius: 1rem;
     border: none;
-    border-radius: 0.75rem;
-    height:230px;
+    padding: 20px;
+    height: 240px;
+
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
 }
 
-/* Ícones: Define a cor primária verde */
+/* Barra lateral de destaque */
+.resumo-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 12px;
+    bottom: 12px;
+    width: 5px;
+    border-radius: 5px;
+    background: linear-gradient(
+        to bottom,
+        #00B894,
+        #1E88C9
+    );
+}
+
+/* Título do resumo */
+.home-resumo-titulo {
+    font-size: 1.3rem;
+    color: #222;
+    margin-bottom: 12px;
+}
+
+/* Ícones */
 .icon-primary {
     color: var(--sensecare-green);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
-/* Botões do Resumo: Define a cor de fundo e o estilo compacto */
+/* Número em destaque */
+.resumo-numero {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--sensecare-green);
+    line-height: 1;
+}
+
+/* Texto */
+.resumo-texto {
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Botões */
 .btn-resumo-primary {
     background-color: var(--sensecare-green);
     color: white;
-    font-size: 0.85rem;
-    padding: 0.3rem 0.6rem;
+    padding: 6px 16px;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 999px;
+    font-size: 13px;
     font-weight: 500;
 }
 
 .btn-resumo-primary:hover {
-    background-color: #00a082; 
-    color: white;
+    background-color: #00a082;
 }
 
-/*
-    Mantenha aqui todos os seus outros estilos (para navbar, .shortcut-item, etc.)
-*/
+/* ===============================
+   MODAL
+   =============================== */
+
 .modal-simples {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
 .modal-conteudo {
-  background-color: white;
-  padding: 20px;
-  width: 90%;
-  max-width: 600px;
-  border-radius: 8px;
-  color: black;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
+    background-color: white;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 8px;
+    color: black;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
 }
 
 .btn-fechar {
-  position: absolute;
-  top: 10px; right: 15px;
-  background: none;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
 }
+/* ===============================
+   AVATAR COM ÍCONE
+   =============================== */
+
+.avatar-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, #e6f8f3, #ffffff);
+    box-shadow:
+        inset 0 0 0 2px #00B894,
+        0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* Ícone do perfil */
+.avatar-placeholder i {
+    font-size: 26px;
+    color: #00B894;
+}
+
+.card-custom-shadow {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-custom-shadow:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+}
+

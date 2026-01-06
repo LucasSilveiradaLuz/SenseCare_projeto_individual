@@ -13,9 +13,10 @@ app.use(express.static(path.join(__dirname, "public")));
 // Conexão com o banco MySQL (via XAMPP)
 const db = mysql.createConnection({
   host: "localhost", // Servidor do MySQL
-  user: "root", // Usuário padrão do XAMPP
-  password: "", // Senha (geralmente vazia no XAMPP)
+  user: "node", // Usuário padrão do XAMPP
+  password: "1234", // Senha (geralmente vazia no XAMPP)
   database: "SenseCare", // Nome do banco que você criou
+  port: 3300
 });
 
 
@@ -52,6 +53,7 @@ CPF_Paciente, Nome, dataNascimento, endereco, telefone, nomeMae, procedimento, H
     }
   );
 });
+
 app.delete('/Pacientes/:CPF_Paciente', (req, res) => {
   const CPF_Paciente = req.params.CPF_Paciente; // pega o parâmetro da URL
   db.query(

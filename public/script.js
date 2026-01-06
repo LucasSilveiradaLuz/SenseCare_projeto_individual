@@ -181,15 +181,32 @@ async function cadastrarPaciente() {
     document.getElementById("formCadastro")?.reset();
 
     // Atualiza lista local sem recarregar página
-    listaPacientes.push(dados);
-    renderizaPacientes(listaPacientes);
+    // listaPacientes.push(dados);
+    // renderizaPacientes(listaPacientes);
+    carregaPaciente()
   } catch (erro) {
     console.error("Erro ao cadastrar paciente:", erro);
     alert("Ocorreu um erro ao cadastrar o paciente.");
   }
   console.log(dados);
 }
+// Função auxiliar para formatar a data de YYYY-MM-DD para DD/MM/YYYY
+function formatarData(dataString) {
+   
 
+    const partes = dataString.split('-'); // Espera um formato como '1960-05-15'
+    
+    // Verifica se a data está no formato esperado (YYYY-MM-DD)
+    if (partes.length === 3) {
+        const ano = partes[0];
+        const mes = partes[1];
+        const dia = partes[2];
+        return `${dia}/${mes}/${ano}`;
+    }
+    
+    // Se não estiver no formato esperado, retorna a string original
+    return dataString;
+}
 // Modal paciente
 function abrirModalPaciente(paciente) {
   const modal = document.getElementById("modalPaciente");
@@ -198,7 +215,7 @@ function abrirModalPaciente(paciente) {
   modalConteudo.innerHTML = `
     <h2>${paciente.Nome}</h2>
     <p><strong>CPF:</strong> ${paciente.CPF_Paciente}</p>
-    <p><strong>Data de nascimento:</strong> ${paciente.dataNascimento}</p>
+    <p><strong>Data de nascimento:</strong> ${paciente.dataNascimento} </p>
     <p><strong>Endereço:</strong> ${paciente.endereco}</p>
     <p><strong>Telefone:</strong> ${paciente.telefone}</p>
     <p><strong>Nome da mãe:</strong> ${paciente.nomeMae}</p>
