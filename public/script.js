@@ -257,6 +257,144 @@ function registrarCuidado() {
 
 document.getElementById("btnSalvarCuidado")
     .addEventListener("click", registrarCuidado);
+function abrirModalPaciente(paciente) {
+  const modal = document.getElementById("modalPaciente");
+  const modalConteudo = document.getElementById("modalConteudoPaciente");
 
+  modalConteudo.innerHTML = `
+    <h2>${paciente.Nome}</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>CPF:</strong> ${paciente.CPF_Paciente}</p>
+            <p><strong>Procedimento:</strong> ${paciente.procedimento}</p>
+            <p><strong>Medicações:</strong> ${paciente.Medicacoes}</p>
+        </div>
+        <div class="col-md-6 text-end">
+            <button id="btnAbrirFormCuidado" class="btn btn-warning fw-bold">
+                <i class="bi bi-plus-circle"></i> Adicionar Cuidado
+            </button>
+        </div>
+    </div>
+    <hr>
+    <p><strong>Data de nascimento:</strong> ${paciente.dataNascimento}</p>
+    <p><strong>Alergias:</strong> ${paciente.Alergias}</p>
+    <p><strong>Prioridade:</strong> ${paciente.Prioridade}</p>
+  `;
+
+  modal.style.display = "flex";
+
+  // Evento para abrir o modal de cuidados a partir do perfil do paciente
+  document.getElementById("btnAbrirFormCuidado").onclick = () => {
+    // Fecha o modal de detalhes e abre o de cuidados
+    modal.style.display = "none";
+    abrirModalNovoCuidado(paciente);
+  };
+}
+function abrirModalNovoCuidado(paciente) {
+    const modalCuidado = document.getElementById("modal-novo-cuidado");
+    document.getElementById("nome-paciente-cuidado").innerText = `Paciente: ${paciente.Nome}`;
+    
+    // Guardamos o CPF em um atributo de dados para saber a quem pertence o cuidado na hora de salvar
+    modalCuidado.setAttribute("data-cpf-atual", paciente.CPF_Paciente);
+
+    // Limpa campos anteriores
+    document.querySelectorAll('#opcoes-cuidado input[type="checkbox"]').forEach(cb => cb.checked = false);
+    document.getElementById("observacoes-cuidado").value = "";
+    
+    // Sugere a data e hora atual
+    document.getElementById("data-cuidado").value = new Date().toISOString().split('T')[0];
+    document.getElementById("hora-cuidado").value = new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+
+    modalCuidado.style.display = "block";
+}
+async function registrarCuidado() {
+    const modalCuidado = document.getElementById("modal-novo-cuidado");
+    const cpfPaciente = modalCuidado.getAttribute("data-cpf-atual");
+
+    const cuidados = Array.from(
+        document.querySelectorAll('#opcoes-cuidado input[type="checkbox"]:checked')
+    ).map(c => c.parentElement.textContent.trim()); 
+
+
+    const registro = {
+        pacienteCPF: cpfPaciente,
+        cuidados: cuidados,
+        observacoes: document.getElementById("observacoes-cuidado").value,
+        data: document.getElementById("data-cuidado").value,
+        hora: document.getElementById("hora-cuidado").value
+    };
+
+    console.log("Enviando cuidado:", registro);
+
+    // Se você tiver um endpoint no backend para cuidados, use o fetch aqui
+    // Exemplo: await fetch('http://localhost:3000/Cuidados', { ... })
+
+    alert(`Cuidado para o paciente registrado com sucesso!`);
+    modalCuidado.style.display = "none";
+}
+document.getElementById("btnFecharCuidadoModal").addEventListener("click", () => {
+    document.getElementById("modal-novo-cuidado").style.display = "none";
+});
+async function registrarCuidado() {
+    const modalCuidado = document.getElementById("modal-novo-cuidado");
+    const cpfPaciente = modalCuidado.getAttribute("data-cpf-atual");
+
+    const cuidadosMarcados = Array.from(
+        document.querySelectorAll('#opcoes-cuidado input[type="checkbox"]:checked')
+    ).map(c => c.nextSibling.textContent.trim());
+
+    const novoCuidado = {
+        pacienteCPF: cpfPaciente, // Aqui é onde a mágica da subordinação acontece
+        cuidados: cuidadosMarcados,
+        observacoes: document.getElementById("observacoes-cuidado").value,
+        data: document.getElementById("data-cuidado").value,
+        hora: document.getElementById("hora-cuidado").value
+    };
+
+    try {
+        const resposta = await fetch("http://localhost:3000/Cuidados", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(novoCuidado)
+        });
+
+        if (resposta.ok) {
+            alert("Cuidado registrado com sucesso!");
+            modalCuidado.style.display = "none";
+        }
+    } catch (erro) {
+        console.error("Erro ao salvar cuidado:", erro);
+        alert("Erro ao conectar com o servidor.");
+    }
+}
+async function carregarHistorico(cpf) {
+    try {
+        // Busca apenas os cuidados deste paciente específico
+        const resposta = await fetch(`http://localhost:3000/Cuidados?pacienteCPF=${cpf}`);
+        const historico = await resposta.json();
+        
+        const listaHistorico = document.getElementById("historico-cuidados-lista");
+        listaHistorico.innerHTML = ""; // Limpa a lista atual
+
+        if (historico.length === 0) {
+            listaHistorico.innerHTML = "<p>Nenhum cuidado registrado para este paciente.</p>";
+        } else {
+            historico.forEach(c => {
+                const item = document.createElement("div");
+                item.className = "border-bottom mb-2 pb-2";
+                item.innerHTML = `
+                    <small class="text-muted">${c.data} às ${c.hora}</small><br>
+                    <strong>Cuidados:</strong> ${c.cuidados.join(", ")}<br>
+                    <strong>Obs:</strong> ${c.observacoes}
+                `;
+                listaHistorico.appendChild(item);
+            });
+        }
+        
+        document.getElementById("modal-historico-cuidado").style.display = "block";
+    } catch (erro) {
+        console.error("Erro ao carregar histórico:", erro);
+    }
+}
 // Inicializa a lista de pacientes ao carregar
 carregaPaciente();
