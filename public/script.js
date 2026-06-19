@@ -144,7 +144,9 @@ searchInput.addEventListener("input", () => {
   const termo = searchInput.value.toLowerCase().trim();
   const filtrados = listaPacientes.filter(p => 
     p.Nome.toLowerCase().includes(termo) || 
-    p.CPF_Paciente.includes(termo)
+    p.CPF_Paciente.includes(termo) ||
+    p.procedimento.toLowerCase().includes(termo) ||
+    p.Prioridade.toLowerCase().includes(termo)
   );
   renderizaPacientes(filtrados);
 });
