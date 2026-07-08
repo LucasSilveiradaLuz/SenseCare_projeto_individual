@@ -13,10 +13,9 @@ app.use(express.static(path.join(__dirname, "public")));
 // Conexão com o banco MySQL (via XAMPP)
 const db = mysql.createConnection({
   host: "localhost", // Servidor do MySQL
-  user: "node", // Usuário padrão do XAMPP
-  password: "1234", // Senha (geralmente vazia no XAMPP)
-  database: "SenseCare", // Nome do banco que você criou
-  port: 3300
+  user: "root", // Usuário padrão do XAMPP
+  password: "", // Senha (geralmente vazia no XAMPP)
+  database: "sensecare", // Nome do banco que você criou
 });
 
 

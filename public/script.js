@@ -1,3 +1,4 @@
+
 // const CIP = document.getElementById("CIP");
 // const senha = document.getElementById("senha");
 
@@ -140,20 +141,43 @@ async function carregaPaciente() {
 }
 
 // Barra de pesquisa
-searchInput.addEventListener("input", () => {
-  const termo = searchInput.value.toLowerCase().trim();
-  const filtrados = listaPacientes.filter(p => 
-    p.Nome.toLowerCase().includes(termo) || 
-    p.CPF_Paciente.includes(termo) ||
-    p.procedimento.toLowerCase().includes(termo) ||
-    p.Prioridade.toLowerCase().includes(termo)
-  );
-  renderizaPacientes(filtrados);
-});
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    const termo = searchInput.value.toLowerCase().trim();
+    const filtrados = listaPacientes.filter(p => 
+      p.Nome.toLowerCase().includes(termo) || 
+      p.CPF_Paciente.includes(termo) 
+    );
+    renderizaPacientes(filtrados);
+  });
+}
+
+// Monitoramento do campo dinâmico de Alergias (Corrigido e movido para o escopo global)
+const selectAlergias = document.querySelector('select[name="Alergias"]');
+if (selectAlergias) {
+  selectAlergias.addEventListener('change', (event) => {
+    const campoTexto = document.getElementById('campo-dinamico');
+    const inputInterno = document.getElementById('input-especificar');
+    
+    if (campoTexto && inputInterno) {
+      if (event.target.value === 'Sim') {
+        campoTexto.classList.remove('hidden'); 
+        inputInterno.focus();                  
+        inputInterno.required = true;         
+      } else {
+        campoTexto.classList.add('hidden');    
+        inputInterno.value = '';               
+        inputInterno.required = false;         
+      }
+    }
+  });
+}
 
 // Função para cadastrar paciente
-document.getElementById("btnEnviar")
-  .addEventListener("click", cadastrarPaciente);
+const btnEnviar = document.getElementById("btnEnviar");
+if (btnEnviar) {
+  btnEnviar.addEventListener("click", cadastrarPaciente);
+}
 
 async function cadastrarPaciente() {
   const dados = {
@@ -168,8 +192,11 @@ async function cadastrarPaciente() {
     Medicacoes: document.getElementById("Medicacoes").value,
     Genero: document.querySelector('select[name="Genero"]').value,
     Alergias: document.querySelector('select[name="Alergias"]').value,
+    alergiaEspecifica: detalheAlergia,
     Prioridade: document.querySelector('select[name="Prioridade"]').value
   };
+ 
+
 
   try {
     const resposta = await fetch(url, {
@@ -183,19 +210,16 @@ async function cadastrarPaciente() {
     document.getElementById("formCadastro")?.reset();
 
     // Atualiza lista local sem recarregar página
-    // listaPacientes.push(dados);
-    // renderizaPacientes(listaPacientes);
-    carregaPaciente()
+    carregaPaciente();
   } catch (erro) {
     console.error("Erro ao cadastrar paciente:", erro);
     alert("Ocorreu um erro ao cadastrar o paciente.");
   }
   console.log(dados);
 }
+
 // Função auxiliar para formatar a data de YYYY-MM-DD para DD/MM/YYYY
 function formatarData(dataString) {
-   
-
     const partes = dataString.split('-'); // Espera um formato como '1960-05-15'
     
     // Verifica se a data está no formato esperado (YYYY-MM-DD)
@@ -209,56 +233,8 @@ function formatarData(dataString) {
     // Se não estiver no formato esperado, retorna a string original
     return dataString;
 }
-// Modal paciente
-function abrirModalPaciente(paciente) {
-  const modal = document.getElementById("modalPaciente");
-  const modalConteudo = document.getElementById("modalConteudoPaciente");
 
-  modalConteudo.innerHTML = `
-    <h2>${paciente.Nome}</h2>
-    <p><strong>CPF:</strong> ${paciente.CPF_Paciente}</p>
-    <p><strong>Data de nascimento:</strong> ${paciente.dataNascimento} </p>
-    <p><strong>Endereço:</strong> ${paciente.endereco}</p>
-    <p><strong>Telefone:</strong> ${paciente.telefone}</p>
-    <p><strong>Nome da mãe:</strong> ${paciente.nomeMae}</p>
-    <p><strong>Procedimento:</strong> ${paciente.procedimento}</p>
-    <p><strong>Histórico de doenças:</strong> ${paciente.HistoricoDoencas}</p>
-    <p><strong>Medicações:</strong> ${paciente.Medicacoes}</p>
-    <p><strong>Gênero:</strong> ${paciente.Genero}</p>
-    <p><strong>Alergias:</strong> ${paciente.Alergias}</p>
-    <p><strong>Prioridade:</strong> ${paciente.Prioridade}</p>
-  `;
-
-  modal.style.display = "flex";
-  modal.onclick = function(event) {
-    if (event.target === modal) modal.style.display = "none";
-  };
-}
-
-document.getElementById("btnFecharModal").addEventListener("click", () => {
-  document.getElementById("modalPaciente").style.display = "none";
-});
-
-// Função para registrar cuidado
-function registrarCuidado() {
-  const cuidados = Array.from(
-      document.querySelectorAll('#opcoes-cuidado input[type="checkbox"]:checked')
-  ).map(c => c.id);
-
-  const registro = {
-      cuidados,
-      observacoes: document.getElementById("observacoes-cuidado").value,
-      data: document.getElementById("data-cuidado").value,
-      hora: document.getElementById("hora-cuidado").value
-  };
-
-  console.log("Cuidado registrado:", registro);
-
-  alert("Cuidado registrado com sucesso!");
-}
-
-document.getElementById("btnSalvarCuidado")
-    .addEventListener("click", registrarCuidado);
+// Modal paciente (Detalhes do Perfil)
 function abrirModalPaciente(paciente) {
   const modal = document.getElementById("modalPaciente");
   const modalConteudo = document.getElementById("modalConteudoPaciente");
@@ -278,12 +254,17 @@ function abrirModalPaciente(paciente) {
         </div>
     </div>
     <hr>
-    <p><strong>Data de nascimento:</strong> ${paciente.dataNascimento}</p>
+    <p><strong>Data de nascimento:</strong> ${formatarData(paciente.dataNascimento)}</p>
     <p><strong>Alergias:</strong> ${paciente.Alergias}</p>
+    <p><strong>Detalhes da Alergia:</strong> ${paciente.alergiaEspecifica}</p> //adicionar ao banco mais tarde
     <p><strong>Prioridade:</strong> ${paciente.Prioridade}</p>
   `;
-
+// mostra conteúdo do card 
   modal.style.display = "flex";
+
+  modal.onclick = function(event) {
+    if (event.target === modal) modal.style.display = "none";
+  };
 
   // Evento para abrir o modal de cuidados a partir do perfil do paciente
   document.getElementById("btnAbrirFormCuidado").onclick = () => {
@@ -292,6 +273,15 @@ function abrirModalPaciente(paciente) {
     abrirModalNovoCuidado(paciente);
   };
 }
+
+const btnFecharModal = document.getElementById("btnFecharModal");
+if (btnFecharModal) {
+  btnFecharModal.addEventListener("click", () => {
+    document.getElementById("modalPaciente").style.display = "none";
+  });
+}
+
+// Abrir Modal de Cuidado
 function abrirModalNovoCuidado(paciente) {
     const modalCuidado = document.getElementById("modal-novo-cuidado");
     document.getElementById("nome-paciente-cuidado").innerText = `Paciente: ${paciente.Nome}`;
@@ -309,34 +299,8 @@ function abrirModalNovoCuidado(paciente) {
 
     modalCuidado.style.display = "block";
 }
-async function registrarCuidado() {
-    const modalCuidado = document.getElementById("modal-novo-cuidado");
-    const cpfPaciente = modalCuidado.getAttribute("data-cpf-atual");
 
-    const cuidados = Array.from(
-        document.querySelectorAll('#opcoes-cuidado input[type="checkbox"]:checked')
-    ).map(c => c.parentElement.textContent.trim()); 
-
-
-    const registro = {
-        pacienteCPF: cpfPaciente,
-        cuidados: cuidados,
-        observacoes: document.getElementById("observacoes-cuidado").value,
-        data: document.getElementById("data-cuidado").value,
-        hora: document.getElementById("hora-cuidado").value
-    };
-
-    console.log("Enviando cuidado:", registro);
-
-    // Se você tiver um endpoint no backend para cuidados, use o fetch aqui
-    // Exemplo: await fetch('http://localhost:3000/Cuidados', { ... })
-
-    alert(`Cuidado para o paciente registrado com sucesso!`);
-    modalCuidado.style.display = "none";
-}
-document.getElementById("btnFecharCuidadoModal").addEventListener("click", () => {
-    document.getElementById("modal-novo-cuidado").style.display = "none";
-});
+// Função para registrar cuidado no servidor
 async function registrarCuidado() {
     const modalCuidado = document.getElementById("modal-novo-cuidado");
     const cpfPaciente = modalCuidado.getAttribute("data-cpf-atual");
@@ -369,6 +333,20 @@ async function registrarCuidado() {
         alert("Erro ao conectar com o servidor.");
     }
 }
+
+const btnSalvarCuidado = document.getElementById("btnSalvarCuidado");
+if (btnSalvarCuidado) {
+  btnSalvarCuidado.addEventListener("click", registrarCuidado);
+}
+
+const btnFecharCuidadoModal = document.getElementById("btnFecharCuidadoModal");
+if (btnFecharCuidadoModal) {
+  btnFecharCuidadoModal.addEventListener("click", () => {
+      document.getElementById("modal-novo-cuidado").style.display = "none";
+  });
+}
+
+// Histórico de cuidados
 async function carregarHistorico(cpf) {
     try {
         // Busca apenas os cuidados deste paciente específico
@@ -398,5 +376,26 @@ async function carregarHistorico(cpf) {
         console.error("Erro ao carregar histórico:", erro);
     }
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const selectAlergias = document.querySelector('select[name="Alergias"]');
+  const campoDinamico = document.getElementById('campo-dinamico');
+  const inputEspecificar = document.getElementById('input-especificar');
+
+  if (selectAlergias && campoDinamico && inputEspecificar) {
+    selectAlergias.addEventListener('change', (event) => {
+      // Verifica se o valor selecionado é 'sim' 
+      if (event.target.value === 'sim') {
+        campoDinamico.classList.remove('hidden'); 
+        inputEspecificar.focus();                 
+        inputEspecificar.required = true;         
+      } else {
+        campoDinamico.classList.add('hidden');    
+        inputEspecificar.value = '';              
+        inputEspecificar.required = false;      
+      }
+    });
+  }
+});
 // Inicializa a lista de pacientes ao carregar
 carregaPaciente();
+

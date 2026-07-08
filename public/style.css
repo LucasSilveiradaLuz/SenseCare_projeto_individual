@@ -254,3 +254,6 @@ body {
     box-shadow: 0 24px 48px rgba(0,0,0,0.15);
 }
 
+.hidden {
+    display: none !important;
+}
